@@ -1,7 +1,8 @@
 
 
-int UP_COMMAND_INPUT = 12;
-int DOWN_COMMAND_INPUT = 13;
+int UP_COMMAND_INPUT = 10;
+int DOWN_COMMAND_INPUT = 11;
+int BLINK_OUTPUT = 13;
 
 int NEUTRAL_DIRECTION = 0;
 int UP_DIRECTION = 1;
@@ -20,11 +21,11 @@ void setupBlind(BlindInfo* blind);
 void updateBlind(BlindInfo* blind);
 
 BlindInfo leftBlind = {
-  8, 9, 0, 1, NEUTRAL_DIRECTION,
+  0, 1, 2, 3, NEUTRAL_DIRECTION,
 };
 
 BlindInfo leftMiddleBlind = {
-  10, 11, 2, 3, NEUTRAL_DIRECTION,
+  4, 5, 6, 7, NEUTRAL_DIRECTION,
 };
 
 void setupBlind(BlindInfo* blind) {
@@ -73,9 +74,10 @@ void updateBlind(BlindInfo* blind) {
 }
 
 void setup() {
-
+  delay(1000);
   pinMode(UP_COMMAND_INPUT, INPUT);
   pinMode(DOWN_COMMAND_INPUT, INPUT);
+  pinMode(BLINK_OUTPUT, OUTPUT);
 
   setupBlind(&leftBlind);
   setupBlind(&leftMiddleBlind);
@@ -84,5 +86,7 @@ void setup() {
 void loop() {
   updateBlind(&leftBlind);
   updateBlind(&leftMiddleBlind);
+  digitalWrite(BLINK_OUTPUT, ((millis()/500) % 2) ? LOW : HIGH);
+  delay(20);
 }
 
